@@ -1,0 +1,20 @@
+# Series:
+alert:
+  PubNub: {'pubkey':'asdf', 'subkey':'sfdsdf'}
+series:
+  - name: First test
+    nx: 16
+    ny: 16
+    nz: 16
+    time: 10
+    platform: Xen
+    repetitions: 1
+    runs:
+      - NbrOfCores: 2
+      - NbrOfCores: 4
+      - NbrOfCores: 8
+      - NbrOfCores: 12
+      - NbrOfCores: 16
+    viz:
+      param1: 'NbrOfCores'
+    
