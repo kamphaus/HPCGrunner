@@ -10,7 +10,10 @@ class Run(dict):
                 self[x] = serie[x]
 #        if 'repetitions' not in self:
 #            self.repetitions = 1
-    
+        #if 'results' not in self: self['results'] = []
+        if hasattr(self, 'init'):
+            self.init(serie, data)
+
     def getReduced(self):
         return { k:self[k] for k in Run.attributes if k in self and (k not in self.serie or self[k] != self.serie[k]) }
     

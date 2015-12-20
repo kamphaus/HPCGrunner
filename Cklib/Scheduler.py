@@ -1,6 +1,7 @@
 
 import Serie
 import SerieResult
+import Diff
 
 class Scheduler(object):
     def __init__(self, config, environment, results):
@@ -8,53 +9,58 @@ class Scheduler(object):
         self.environment = environment
         self.dataResults = results
         self.previousResults = results
-        self.series = ( Serie.Serie(x) for x in config['series'] )
+        print
+        print "config['series']=",config['series']
+        for s in config['series']:
+            print s
+        print
+        self.series = list( Serie.Serie(x) for x in config['series'] )
         for p in self.series: print p
-        self.results = [ SerieResult.SerieResult(x) for x in results ]
+        print "2th:"
+        for p in self.series: print p
+        print
+        self.results = list([ SerieResult.SerieResult(x) for x in results ])
         for r in self.results: print r
+        print
         #self.test = results.nonex
+        self.remaining = Diff.getRemaining(self.series, self.results)
         self.finishedSeries = False
         self.next = self.getNext()
+        print self
+    
+    def __str__(self):
+        return "Scheduler obj: {\n\
+            config: " + str(self.config) + "\n\
+            environment: " + str(self.environment) + "\n\
+            dataResults: " + str(self.dataResults) + "\n\
+            previousResults: " + str(self.previousResults) + "\n\
+            series: " + str(self.series) + "\n\
+            results: " + str(self.results) + "\n\
+            remaining: " + str(self.remaining) + "\n\
+            finishedSeries: " + str(self.finishedSeries) + "\n\
+            next: " + str(self.next) + "\n\
+        }"
     
     def hasNext(self):
-        return self.next != ''
-    
+        #return self.next is not None
+        return False
+
     def executeNext(self):
         if self.hasNext():
             return 1
     
     def getNext(self):
-        return ''
+        for s in self.remaining:
+            for r in s['runs']:
+                return r
+        return None
     
     def getResults(self):
         return self.results
     
     def hasFinishedSeries(self):
-        # There is a series that is finished that was not finished before the last execution
+        """There is a series that is finished that was not finished before the last execution"""
         return 1
     
     def getFinishedSeries(self):
         return {}
-    
-    def getRemaining(self):
-        series = self.series
-        results = self.results
-        result = []
-        oSeries = results.copy()
-        for s in series:
-            found = False
-            for t in oSeries:
-                if s==t:
-                    found = True
-                    toAdd = s.getRemaining(t)
-                    # Check if there are any iterations remaining in that run
-                    if len(t['results']) < t['repetitions']:
-                        t['remaining'] = t['repetitions'] - len(t['results'])
-                        result.append( t )
-                    # Remove from oSeries
-                    oSeries.remove(t)
-                    break
-            if not found:
-                toAdd = s.getRemaining(SerieResult.SerieResult(s.data))
-                result.append( toAdd )
-        return result

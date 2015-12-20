@@ -1,8 +1,10 @@
 
 import Serie
+import RunResult
+
 
 class SerieResult(Serie.Serie):
 
-    def __init__(self, data):
-        Serie.__init__(data)
-        self.runs = [ RunResult.RunResult(self, d) for d in data['runs'] ]
+    def init(self, data):
+        self['runs'] = list([ RunResult.RunResult(self, d) for d in data['runs'] ])
+        pass
