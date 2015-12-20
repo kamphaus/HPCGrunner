@@ -2,6 +2,7 @@
 import Serie
 import SerieResult
 import Diff
+import Filter
 
 class Scheduler(object):
     def __init__(self, config, environment, results):
@@ -24,10 +25,12 @@ class Scheduler(object):
         print
         #self.test = results.nonex
         self.remaining = Diff.getRemaining(self.series, self.results)
+        self.remainingExecutable = Filter.filterRemaining(self.remaining, environment)
         self.finishedSeries = False
         self.next = self.getNext()
+        self.nextExecutable = self.getNextExecutable()
         print self
-    
+
     def __str__(self):
         return "Scheduler obj: {\n\
             config: " + str(self.config) + "\n\
@@ -37,30 +40,42 @@ class Scheduler(object):
             series: " + str(self.series) + "\n\
             results: " + str(self.results) + "\n\
             remaining: " + str(self.remaining) + "\n\
+            remainingExecutable: " + str(self.remainingExecutable) + "\n\
             finishedSeries: " + str(self.finishedSeries) + "\n\
             next: " + str(self.next) + "\n\
+            nextExecutable: " + str(self.nextExecutable) + "\n\
         }"
-    
+
     def hasNext(self):
         #return self.next is not None
         return False
 
-    def executeNext(self):
-        if self.hasNext():
-            return 1
-    
+    def hasNextExecutable(self):
+        #return self.nextExecutable is not None
+        return False
+
     def getNext(self):
         for s in self.remaining:
             for r in s['runs']:
                 return r
         return None
-    
+
+    def getNextExecutable(self):
+        for s in self.remainingExecutable:
+            for r in s['runs']:
+                return r
+        return None
+
+    def executeNext(self):
+        if self.hasNextExecutable():
+            return 1
+
     def getResults(self):
         return self.results
-    
+
     def hasFinishedSeries(self):
         """There is a series that is finished that was not finished before the last execution"""
         return 1
-    
+
     def getFinishedSeries(self):
         return {}
