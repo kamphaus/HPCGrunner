@@ -15,7 +15,7 @@ class Run(dict):
             self.init(serie, data)
 
     def getReduced(self):
-        return { k:self[k] for k in Run.attributes if k in self and (k not in self.serie or self[k] != self.serie[k]) }
+        return { k:self[k] for k in Run.attributes if k in self and (k not in self.parent or self[k] != self.parent[k]) }
     
     # Compare based on the attributes named in Run.attributes
     def __eq__(self, other):

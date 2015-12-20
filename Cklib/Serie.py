@@ -13,7 +13,7 @@ class Serie(dict):
             self.init(data)
     
     def getReduced(self):
-        result = self.copy()
+        result = { k:self[k] for k in Serie.attributes if k in self }
         result['runs'] = list( run.getReduced() for run in self['runs'] )
         return result
 

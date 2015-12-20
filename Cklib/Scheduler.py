@@ -20,13 +20,14 @@ class Scheduler(object):
         print "2th:"
         for p in self.series: print p
         print
+        if all(x is None for x in results): results = ()
         self.results = list([ SerieResult.SerieResult(x) for x in results ])
         for r in self.results: print r
         print
         #self.test = results.nonex
         self.remaining = Diff.getRemaining(self.series, self.results)
         self.remainingExecutable = Filter.filterRemaining(self.remaining, environment)
-        self.finishedSeries = False
+        self.finishedSeries = None
         self.next = self.getNext()
         self.nextExecutable = self.getNextExecutable()
         print self
@@ -47,12 +48,12 @@ class Scheduler(object):
         }"
 
     def hasNext(self):
-        #return self.next is not None
-        return False
+        return self.next is not None
+        #return False
 
     def hasNextExecutable(self):
-        #return self.nextExecutable is not None
-        return False
+        return self.nextExecutable is not None
+        #return False
 
     def getNext(self):
         for s in self.remaining:
@@ -66,16 +67,36 @@ class Scheduler(object):
                 return r
         return None
 
-    def executeNext(self):
-        if self.hasNextExecutable():
-            return 1
-
     def getResults(self):
         return self.results
 
     def hasFinishedSeries(self):
         """There is a series that is finished that was not finished before the last execution"""
-        return 1
+        return self.finishedSeries is not None
 
     def getFinishedSeries(self):
-        return {}
+        """Get the serie that was finished in the last execution"""
+        return self.finishedSeries
+
+    def getRemaining(self):
+        return self.remaining
+
+    def onUpdate(self, result):
+        if result['parentRemaining']['inResult']:
+            if result['inResult']:
+                pass # is already updated
+            else:
+                result['parentRemaining']['result']['runs'].append(result)
+        else:
+            self.results.append(result['parentRemaining'])
+            result['parentRemaining']['runs'] = [result]
+        lastRemaining = self.remaining
+        self.remaining = Diff.getRemaining(self.series, self.results)
+        self.remainingExecutable = Filter.filterRemaining(self.remaining, self.environment)
+        if len(lastRemaining) > len(self.remaining):
+            self.finishedSeries = result.parent
+        else:
+            self.finishedSeries = None
+        self.next = self.getNext()
+        self.nextExecutable = self.getNextExecutable()
+

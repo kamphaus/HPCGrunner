@@ -4,4 +4,6 @@ class Graph(object):
         self.config = config
     
     def draw(self, serie):
+        print "Drawing diagram"
+        print "for:", serie
         return 1

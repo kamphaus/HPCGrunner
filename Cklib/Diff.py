@@ -35,10 +35,7 @@ def getRemainingSerie(left, right):
 def getRemaining(series, results):
     result = []
     oSeries = copy.copy(results)
-    print "in getRemaining"
-    print series
     for s in series:
-        print "serie", s
         found = False
         for t in oSeries:
             if s==t:
@@ -57,3 +54,9 @@ def getRemaining(series, results):
             toAdd['inResult'] = False
             result.append( toAdd )
     return result
+
+def hasRemainingSerie(serie, remaining):
+    for r in remaining:
+        if serie==r:
+            return True
+    return False
