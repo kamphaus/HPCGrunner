@@ -10,21 +10,9 @@ class Scheduler(object):
         self.environment = environment
         self.dataResults = results
         self.previousResults = results
-        print
-        print "config['series']=",config['series']
-        for s in config['series']:
-            print s
-        print
         self.series = list( Serie.Serie(x) for x in config['series'] )
-        for p in self.series: print p
-        print "2th:"
-        for p in self.series: print p
-        print
         if all(x is None for x in results): results = ()
         self.results = list([ SerieResult.SerieResult(x) for x in results ])
-        for r in self.results: print r
-        print
-        #self.test = results.nonex
         self.remaining = Diff.getRemaining(self.series, self.results)
         self.remainingExecutable = Filter.filterRemaining(self.remaining, environment)
         self.finishedSeries = None
@@ -49,11 +37,9 @@ class Scheduler(object):
 
     def hasNext(self):
         return self.next is not None
-        #return False
 
     def hasNextExecutable(self):
         return self.nextExecutable is not None
-        #return False
 
     def getNext(self):
         for s in self.remaining:

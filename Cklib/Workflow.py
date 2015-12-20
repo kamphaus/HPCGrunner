@@ -9,9 +9,7 @@ class Workflow(object):
 
     def execute(self):
         config = read_yaml_file('config.yml')
-        print yaml.dump(config)
         envir = read_yaml_file('environment.yml')
-        print yaml.dump(envir)
         results = read_yaml_file('results.yml', default=(), ignoreNonExistantFile=True)
         if results is None: results = ()
         scheduler = Scheduler.Scheduler(config, envir, results)
@@ -27,9 +25,7 @@ class Workflow(object):
 
     def viz(self):
         config = read_yaml_file('config.yml')
-        print yaml.dump(config)
         envir = read_yaml_file('environment.yml')
-        print yaml.dump(envir)
         results = read_yaml_file('results.yml', default=(), ignoreNonExistantFile=True)
         if results is None: results = ()
         scheduler = Scheduler.Scheduler(config, envir, results)
