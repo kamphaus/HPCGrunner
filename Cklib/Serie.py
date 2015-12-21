@@ -20,6 +20,9 @@ class Serie(dict):
 
     # Compare based on the attributes named in Serie.attributes
     def __eq__(self, other):
-        a = { k:self[k] for k in Serie.attributes if k in self }
-        b = { k:other[k] for k in Serie.attributes if k in other }
-        return a == b
+        if isinstance(other, Serie):
+            a = { k:self[k] for k in Serie.attributes if k in self }
+            b = { k:other[k] for k in Serie.attributes if k in other }
+            return a == b
+        else:
+            return super(Serie, self).__eq__(other)

@@ -20,6 +20,9 @@ class Run(dict):
     
     # Compare based on the attributes named in Run.attributes
     def __eq__(self, other):
-        a = { k:self[k] for k in Run.attributes if k in self }
-        b = { k:other[k] for k in Run.attributes if k in other }
-        return a == b
+        if isinstance(other, Run):
+            a = { k:self[k] for k in Run.attributes if k in self }
+            b = { k:other[k] for k in Run.attributes if k in other }
+            return a == b
+        else:
+            return super(Run, self).__eq__(other)
