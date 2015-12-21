@@ -2,7 +2,7 @@ import Scheduler
 import Executor
 import Graph
 import Diff
-from FileUtils import read_yaml_file, save_yaml_file
+from FileUtils import read_yaml_file, save_yaml_file, archiveFile
 
 
 class Workflow(object):
@@ -35,11 +35,13 @@ class Workflow(object):
             if not Diff.hasRemainingSerie(r, remaining):
                 graph.draw(r)
 
+    def clean(self):
+        archiveFile('results.yml')
 
 def execute(arguments):
     if 'run' in arguments.action:
         return Workflow().execute()
-    if 'clean' in arguments.action:
-        raise NotImplementedError('Option clean not yet implemented!')
     if 'viz' in arguments.action:
         return Workflow().viz()
+    if 'clean' in arguments.action:
+        Workflow().clean()

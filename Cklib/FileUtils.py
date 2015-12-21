@@ -66,3 +66,12 @@ def findFileOfType(sourceDir, types=()):
             if any(file[-i:] in ext[i] for i in lengths):
                 return file
     return None
+
+
+def archiveFile(file):
+    if os.path.exists(file):
+        filename, file_extension = os.path.splitext(file)
+        counter = 1
+        while os.path.exists(filename + "." + counter + "." + file_extension):
+            counter += 1
+        shutil.move(file, filename + "." + counter + "." + file_extension)
