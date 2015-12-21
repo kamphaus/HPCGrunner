@@ -12,6 +12,7 @@ series:
     platform: Xen
     configuration: Linux_MPI
     repetitions: 1
+    mpiargs:  --hostfile hostfile --mca btlcp_if_include 192.168.178.0/24
     runs:
       - NbrOfCores: 2
       - NbrOfCores: 4
