@@ -2,7 +2,7 @@
 import Run
 
 class Serie(dict):
-    attributes = ('name', 'nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'repetitions', 'viz')
+    attributes = ('name', 'nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions', 'viz')
     def __init__(self, data):
         self.data = data
         for x in Serie.attributes:

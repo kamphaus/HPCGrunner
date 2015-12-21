@@ -2,7 +2,7 @@
 import Run
 
 class RunResult(Run.Run):
-    attributes = ('nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'repetitions', 'results', 'result_id', 'result_exectime', 'result_valid', 'totalExecTime')
+    attributes = ('nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions', 'results', 'result_id', 'result_exectime', 'result_valid', 'totalExecTime')
     attributesRunResult = ('results', 'result_id', 'result_exectime', 'result_valid', 'totalExecTime')
 
     def __init__(self, serie, data):

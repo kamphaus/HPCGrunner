@@ -1,5 +1,5 @@
 class Run(dict):
-    attributes = ('nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'repetitions')
+    attributes = ('nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions')
     def __init__(self, serie, data):
         self.data = data
         self.parent = serie
