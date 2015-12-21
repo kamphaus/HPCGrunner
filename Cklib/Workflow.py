@@ -3,13 +3,17 @@ import Executor
 import Graph
 import Diff
 from FileUtils import read_yaml_file, save_yaml_file, archiveFile
+import os
 
 
 class Workflow(object):
     def execute(self):
         config = read_yaml_file('config.yml')
         envir = read_yaml_file('environment.yml')
+        initial_dir = os.getcwd()
+        os.chdir(config['outDir'])
         results = read_yaml_file('results.yml', default=(), ignoreNonExistantFile=True)
+        os.chdir(initial_dir)
         if results is None: results = ()
         scheduler = Scheduler.Scheduler(config, envir, results)
         executor = Executor.Executor(config)
@@ -18,14 +22,19 @@ class Workflow(object):
         while scheduler.hasNextExecutable():
             executor.execute(scheduler.getNextExecutable())
             results = list(r.getReduced() for r in scheduler.getResults())
+            os.chdir(config['outDir'])
             save_yaml_file('results.yml', results)
+            os.chdir(initial_dir)
             if scheduler.hasFinishedSeries():
                 graph.draw(scheduler.getFinishedSeries())
 
     def viz(self):
         config = read_yaml_file('config.yml')
         envir = read_yaml_file('environment.yml')
+        initial_dir = os.getcwd()
+        os.chdir(config['outDir'])
         results = read_yaml_file('results.yml', default=(), ignoreNonExistantFile=True)
+        os.chdir(initial_dir)
         if results is None: results = ()
         scheduler = Scheduler.Scheduler(config, envir, results)
         graph = Graph.Graph(config)
