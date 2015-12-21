@@ -16,8 +16,9 @@ class Executor(object):
 
     def run(self, next):
         # TODO: Implement this
+        print "Performing work..."
         call(["python", "test.py", "xy"])
-        pass
+        print "Finished work!"
 
     def execute(self, next):
         print "Executing a run:"
