@@ -2,6 +2,7 @@ import os
 from FileUtils import moveFilesOfType, findFileOfType
 import ResultValidator
 import timeit
+from subprocess import call
 
 class Executor(object):
     def __init__ (self, config):
@@ -15,6 +16,7 @@ class Executor(object):
 
     def run(self, next):
         # TODO: Implement this
+        call(["python", "test.py", "xy"])
         pass
 
     def execute(self, next):
@@ -46,18 +48,11 @@ class Executor(object):
         result = ResultValidator.read(resultFile)
         os.chdir(initial_dir)
 
-        # Debug output
-        # TODO: fix this
-        # next['results'].append(0.1)
-        # next['result_id'].append(2)
-        next['result_exectime'].append(0.3)
-        # next['result_valid'].append(False)
-        next['totalExecTime'] += 0.3
         next['results'].append(result['results'])
         next['result_id'].append(result['result_id'])
-        # next['result_exectime'].append(elapsed)
+        next['result_exectime'].append(elapsed)
         next['result_valid'].append(result['result_valid'])
-        # next['totalExecTime'] += elapsed
+        next['totalExecTime'] += elapsed
 
         for o in self.observers:
             o.onUpdate(next)
