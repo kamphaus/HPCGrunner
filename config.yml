@@ -2,6 +2,7 @@
 alert:
   PubNub: {'pubkey':'asdf', 'subkey':'sfdsdf'}
 HPCGdir: '../hpcg'
+outDir: '../out'
 series:
   - name: First test
     nx: 16
