@@ -1,12 +1,11 @@
-
-import yaml
 import Scheduler
 import Executor
 import Graph
 import Diff
+from FileUtils import read_yaml_file, save_yaml_file
+
 
 class Workflow(object):
-
     def execute(self):
         config = read_yaml_file('config.yml')
         envir = read_yaml_file('environment.yml')
@@ -36,30 +35,6 @@ class Workflow(object):
             if not Diff.hasRemainingSerie(r, remaining):
                 graph.draw(r)
 
-def read_yaml_file(filename, default=None, ignoreNonExistantFile=False):
-    if filename[-5:] == ".yaml" or filename[-4:] == ".yml":
-        if ignoreNonExistantFile:
-            try:
-                file = open(filename)
-                result = yaml.safe_load(file.read())
-                file.close()
-            except IOError:
-                return default
-        else:
-            file = open(filename)
-            result = yaml.safe_load(file.read())
-            file.close()
-        return result
-    else:
-        raise ValueError('Filename must have .yaml ending')
-
-def save_yaml_file(filename, data):
-    if filename[-5:] == ".yaml" or filename[-4:] == ".yml":
-        file = open(filename, "w")
-        yaml.dump(data, file)
-        file.close()
-    else:
-        raise ValueError('Filename must have .yaml ending')
 
 def execute(arguments):
     if 'run' in arguments.action:
