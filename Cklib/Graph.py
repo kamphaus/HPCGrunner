@@ -90,8 +90,7 @@ class Graph(object):
         initial_dir = os.getcwd()
         os.chdir(self.config['outDir'])
         dt = datetime.datetime.now()
-        # TODO: uncomment this
-        #plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
+        plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
         os.chdir(initial_dir)
 
         return 1

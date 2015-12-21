@@ -26,7 +26,7 @@ class Workflow(object):
             executor.execute(scheduler.getNextExecutable())
             results = list(r.getReduced() for r in scheduler.getResults())
             os.chdir(config['outDir'])
-            #save_yaml_file('results.yml', results)
+            save_yaml_file('results.yml', results)
             os.chdir(initial_dir)
             if scheduler.hasFinishedSeries():
                 graph.draw(scheduler.getFinishedSeries())
