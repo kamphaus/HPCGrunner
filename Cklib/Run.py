@@ -1,6 +1,7 @@
 class Run(dict):
     attributes = ('nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions')
-    def __init__(self, serie, data):
+    def __init__(self, serie, data, **kwargs):
+        super(Run, self).__init__(**kwargs)
         self.data = data
         self.parent = serie
         for x in Run.attributes:

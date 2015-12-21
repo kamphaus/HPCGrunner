@@ -3,7 +3,8 @@ import Run
 
 class Serie(dict):
     attributes = ('name', 'nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions', 'viz')
-    def __init__(self, data):
+    def __init__(self, data, **kwargs):
+        super(Serie, self).__init__(**kwargs)
         self.data = data
         for x in Serie.attributes:
             if x in data:
