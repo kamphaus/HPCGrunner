@@ -14,14 +14,14 @@ class Executor(object):
         self.observers.append(observer)
 
     def run(self, next):
+        # TODO: Implement this
         pass
 
     def execute(self, next):
-        print "AHAHAHAHAH"
+        print "Executing a run:"
         print "next:", next
         initial_dir = os.getcwd()
         os.chdir(self.config['HPCGdir'])
-        print "We are now in dir:",os.getcwd()
         try:
             os.chdir(next['configuration'])
             os.chdir('bin')
@@ -31,10 +31,9 @@ class Executor(object):
             raise EnvironmentError("The configuration '"+next['configuration']+"' does not seem to exist or is not compiled properly.")
         except IOError as e:
             raise EnvironmentError("The configuration '"+next['configuration']+"' is not compiled properly or you do not have access rights.")
-        print "We are now in dir:",os.getcwd()
-        print os.path.isdir('results')
         if not os.path.exists('results'):
             os.mkdir('results')
+        # TODO: uncomment this
         #moveFilesOfType('.', 'results', ('.txt', '.yml', '.yaml', '.log'))
 
         # Time execution
