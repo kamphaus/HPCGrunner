@@ -10,7 +10,8 @@ class Graph(object):
     def __init__(self, config=None):
         self.config = config
 
-    def isNumberSerie(self, values):
+    @staticmethod
+    def isNumberSerie(values):
         return all([isinstance(v, (int, long, float)) for v in values])
 
     def draw(self, serie):
@@ -89,7 +90,8 @@ class Graph(object):
         initial_dir = os.getcwd()
         os.chdir(self.config['outDir'])
         dt = datetime.datetime.now()
-        plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
+        # TODO: uncomment this
+        #plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
         os.chdir(initial_dir)
 
         return 1
