@@ -5,7 +5,7 @@ Finally it will aggregate the results and generate diagrams.
 
 ## Installation
 
-Check out from github: `git checkout`
+Check out from github: `git clone https://github.com/kamphaus/HPCGrunner.git`
 
 ## Prerequisite
 
