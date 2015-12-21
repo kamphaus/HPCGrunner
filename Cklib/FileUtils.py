@@ -7,19 +7,19 @@ def read_yaml_file(filename, default=None, ignoreNonExistantFile=False, fixCorru
         if ignoreNonExistantFile:
             try:
                 file = open(filename)
-                result = yaml.safe_load(fixCorrupedYaml(file.read(), fixCorruption))
+                result = yaml.safe_load(fixCorruptedYaml(file.read(), fixCorruption))
                 file.close()
             except IOError:
                 return default
         else:
             file = open(filename)
-            result = yaml.safe_load(fixCorrupedYaml(file.read(), fixCorruption))
+            result = yaml.safe_load(fixCorruptedYaml(file.read(), fixCorruption))
             file.close()
         return result
     else:
         raise ValueError('Filename must have .yaml ending')
 
-def fixCorrupedYaml(content, fixCorruption=False):
+def fixCorruptedYaml(content, fixCorruption=False):
     if not fixCorruption:
         return content
     else:
