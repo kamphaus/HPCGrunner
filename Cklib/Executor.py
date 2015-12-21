@@ -47,6 +47,7 @@ class Executor(object):
         os.chdir(initial_dir)
 
         # Debug output
+        # TODO: fix this
         # next['results'].append(0.1)
         # next['result_id'].append(2)
         next['result_exectime'].append(0.3)
