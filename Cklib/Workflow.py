@@ -1,5 +1,6 @@
 import Scheduler
 import Executor
+import Counter
 import Graph
 import Diff
 from FileUtils import read_yaml_file, save_yaml_file, archiveFile
@@ -20,10 +21,12 @@ class Workflow(object):
         executor.registerObserver(scheduler)
         graph = Graph.Graph(config)
         while scheduler.hasNextExecutable():
+            print "Remaining total time:", Counter.countRemaining(scheduler.getRemaining())
+            print "Remaining time:", Counter.countRemaining(scheduler.getRemainingExecutable())
             executor.execute(scheduler.getNextExecutable())
             results = list(r.getReduced() for r in scheduler.getResults())
             os.chdir(config['outDir'])
-            save_yaml_file('results.yml', results)
+            #save_yaml_file('results.yml', results)
             os.chdir(initial_dir)
             if scheduler.hasFinishedSeries():
                 graph.draw(scheduler.getFinishedSeries())

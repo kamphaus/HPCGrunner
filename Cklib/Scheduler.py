@@ -18,7 +18,7 @@ class Scheduler(object):
         self.finishedSeries = None
         self.next = self.getNext()
         self.nextExecutable = self.getNextExecutable()
-        print self
+        #print self
 
     def __str__(self):
         return "Scheduler obj: {\n\
@@ -66,6 +66,9 @@ class Scheduler(object):
 
     def getRemaining(self):
         return self.remaining
+
+    def getRemainingExecutable(self):
+        return self.remainingExecutable
 
     def onUpdate(self, result):
         if result['parentRemaining']['inResult']:
