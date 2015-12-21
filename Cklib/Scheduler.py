@@ -62,7 +62,7 @@ class Scheduler(object):
 
     def getFinishedSeries(self):
         """Get the serie that was finished in the last execution"""
-        return self.finishedSeries
+        return self.finishedSeries['result']
 
     def getRemaining(self):
         return self.remaining
