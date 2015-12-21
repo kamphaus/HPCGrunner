@@ -14,7 +14,7 @@ class Workflow(object):
         scheduler = Scheduler.Scheduler(config, envir, results)
         executor = Executor.Executor(config)
         executor.registerObserver(scheduler)
-        graph = Graph.Graph()
+        graph = Graph.Graph(config)
         while scheduler.hasNextExecutable():
             executor.execute(scheduler.getNextExecutable())
             results = list(r.getReduced() for r in scheduler.getResults())
@@ -28,7 +28,7 @@ class Workflow(object):
         results = read_yaml_file('results.yml', default=(), ignoreNonExistantFile=True)
         if results is None: results = ()
         scheduler = Scheduler.Scheduler(config, envir, results)
-        graph = Graph.Graph()
+        graph = Graph.Graph(config)
         results = scheduler.getResults()
         remaining = scheduler.getRemaining()
         for r in results:
