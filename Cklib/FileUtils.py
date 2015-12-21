@@ -20,6 +20,7 @@ def read_yaml_file(filename, default=None, ignoreNonExistantFile=False, fixCorru
         raise ValueError('Filename must have .yaml ending')
 
 def fixCorruptedYaml(content, fixCorruption=False):
+    """Fixes indentation errors"""
     if not fixCorruption:
         return content
     else:
