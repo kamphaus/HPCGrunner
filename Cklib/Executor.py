@@ -16,8 +16,12 @@ class Executor(object):
 
     def run(self, next):
         # TODO: Implement this
+        toExecute = ["mpirun", "-np "+next['NbrOfCores']]
+        if 'mpiargs' in next:
+            toExecute.append(next['mpiargs'])
+        toExecute.extend(["./xhpcg", "--nx="+next['nx'], "--ny="+next['ny'], "--nz="+next['nz'], "--rt="+next['time']])
         print "Performing work..."
-        call(["python", "test.py", "xy"])
+        call(toExecute)
         print "Finished work!"
 
     def execute(self, next):
@@ -26,7 +30,10 @@ class Executor(object):
         initial_dir = os.getcwd()
         os.chdir(self.config['HPCGdir'])
         try:
-            os.chdir(next['configuration'])
+            if os.path.exists(next['configuration']):
+                os.chdir(next['configuration'])
+            else:
+                os.chdir("Make."+next['configuration'])
             os.chdir('bin')
             fp = open("xhpcg")
             fp.close()
@@ -36,8 +43,7 @@ class Executor(object):
             raise EnvironmentError("The configuration '"+next['configuration']+"' is not compiled properly or you do not have access rights.")
         if not os.path.exists('results'):
             os.mkdir('results')
-        # TODO: uncomment this
-        #moveFilesOfType('.', 'results', ('.txt', '.yml', '.yaml', '.log'))
+        moveFilesOfType('.', 'results', ('.txt', '.yml', '.yaml', '.log'))
 
         # Time execution
         start_time = timeit.default_timer()
