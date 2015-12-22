@@ -23,3 +23,6 @@ You need the following software:
 Edit `config.yml` and `environment.yml`.
 
 Execute `python runner.py`
+
+If a PubNub subscribe and publish keys are configured in `config.yml` and in `tool/console.html`,
+then `tool/console.html` can be used to follow the progress of the execution.
