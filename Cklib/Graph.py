@@ -15,8 +15,9 @@ class Graph(object):
         return all([isinstance(v, (int, long, float)) for v in values])
 
     def draw(self, serie):
-        print "Drawing diagram"
-        print "for:", serie
+        print "Drawing diagram..."
+        if self.config['verbosity']>1:
+            print "for:", serie
 
         # Preprocessing: remove invalid test results
         if 'removeInvalid' not in serie['viz'] or serie['viz']['removeInvalid']==True:
@@ -38,20 +39,25 @@ class Graph(object):
             values_param2 = sorted(list(set(r[param2] for r in serie['runs'])))
             print values_param2
         values_param1 = sorted(list(set(r[param1] for r in serie['runs'])))
-        print values_param1
+        if self.config['verbosity']>1:
+            print values_param1
         if param2 is None:
             series = [[[r['results'] for r in serie['runs'] if r[param1]==p] for p in values_param1]]
         else:
             series = [[[r['results'] for r in serie['runs'] if r[param1]==p and r[param2]==p2] for p in values_param1] for p2 in values_param2]
         # Flatten the inner most 2 lists: list of runs with same param1 & param2 containing list of results
         series = [[[x for z in y for x in z] for y in s] for s in series]
-        print series
+        if self.config['verbosity']>1:
+            print series
         calc_err = list(any(len(r)>1 for r in s) for s in series)
-        print calc_err
+        if self.config['verbosity']>1:
+            print calc_err
         means = [[np.mean(x) for x in s] for s in series]
-        print means
+        if self.config['verbosity']>1:
+            print means
         errors = [list(np.std(x) for x in s) for s in series]
-        print errors
+        if self.config['verbosity']>1:
+            print errors
         numDataSets = len(means)
         numXAxis = len(values_param1)
 
@@ -90,7 +96,10 @@ class Graph(object):
         initial_dir = os.getcwd()
         os.chdir(self.config['outDir'])
         dt = datetime.datetime.now()
-        plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
+        if 'abbrv' in serie:
+            plt.savefig(re.sub('[:]', '', dt.isoformat())+'-'+serie['abbrv']+'.png', bbox_inches='tight')
+        else:
+            plt.savefig(re.sub('[:]', '', dt.isoformat())+'.png', bbox_inches='tight')
         os.chdir(initial_dir)
 
         return 1

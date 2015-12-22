@@ -3,8 +3,10 @@ alert:
   PubNub: {'pubkey':'asdf', 'subkey':'sfdsdf'}
 HPCGdir: '../hpcg'
 outDir: '../out'
+verbosity: 1
 series:
   - name: First test
+    abbrv: FTest
     nx: 16
     ny: 16
     nz: 16

@@ -19,13 +19,16 @@ class Executor(object):
         if 'mpiargs' in next:
             toExecute.extend(next['mpiargs'].split(" "))
         toExecute.extend(["./xhpcg", "--nx="+str(next['nx']), "--ny="+str(next['ny']), "--nz="+str(next['nz']), "--rt="+str(next['time'])])
+        if self.config['verbosity']>1:
+            print "Calling:", toExecute
         print "Performing work..."
         call(toExecute)
         print "Finished work!"
 
     def execute(self, next):
         print "Executing a run:"
-        print "next:", next
+        if self.config['verbosity']>1:
+            print "next:", next
         initial_dir = os.getcwd()
         os.chdir(self.config['HPCGdir'])
         try:
