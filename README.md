@@ -11,8 +11,11 @@ Check out from github: `git clone https://github.com/kamphaus/HPCGrunner.git`
 
 You need the following software:
 * HPCG (obviously) http://hpcg-benchmark.org/
-* Python
-* matplotlib
+* Python 2.7
+* Python modules:
+  * pyyaml
+  * numpy
+  * python-matplotlib
 
 ## Usage
 
