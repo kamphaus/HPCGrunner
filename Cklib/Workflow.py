@@ -64,15 +64,15 @@ class Workflow(object):
 
 def execute(arguments):
     config = read_yaml_file('config.yml')
-    a = Alert(config)
+    a = Alert.Alert(config)
     try:
         if 'run' in arguments.action:
-            return Workflow(a).execute()
+            Workflow(a).execute()
         if 'viz' in arguments.action:
-            return Workflow(a).viz()
+            Workflow(a).viz()
         if 'clean' in arguments.action:
             Workflow(a).clean()
         a.ok("Finished execution!")
     except BaseException as e:
-        a.error(str(e))
+        a.error(repr(e))
         raise
