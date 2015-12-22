@@ -73,6 +73,8 @@ def archiveFile(file):
     if os.path.exists(file):
         filename, file_extension = os.path.splitext(file)
         counter = 1
-        while os.path.exists(filename + "." + counter + "." + file_extension):
+        while os.path.exists(filename + "." + str(counter) + file_extension):
             counter += 1
-        shutil.move(file, filename + "." + counter + "." + file_extension)
+        shutil.move(file, filename + "." + str(counter) + file_extension)
+    else:
+        print "File '"+file+"' does not exist."

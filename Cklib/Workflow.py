@@ -48,7 +48,11 @@ class Workflow(object):
                 graph.draw(r)
 
     def clean(self):
+        config = read_yaml_file('config.yml')
+        initial_dir = os.getcwd()
+        os.chdir(config['outDir'])
         archiveFile('results.yml')
+        os.chdir(initial_dir)
 
 def execute(arguments):
     if 'run' in arguments.action:
