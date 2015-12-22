@@ -15,11 +15,10 @@ class Executor(object):
         self.observers.append(observer)
 
     def run(self, next):
-        # TODO: Implement this
-        toExecute = ["mpirun", "-np "+next['NbrOfCores']]
+        toExecute = ["mpirun", "-np", str(next['NbrOfCores'])]
         if 'mpiargs' in next:
-            toExecute.append(next['mpiargs'])
-        toExecute.extend(["./xhpcg", "--nx="+next['nx'], "--ny="+next['ny'], "--nz="+next['nz'], "--rt="+next['time']])
+            toExecute.extend(next['mpiargs'].split(" "))
+        toExecute.extend(["./xhpcg", "--nx="+str(next['nx']), "--ny="+str(next['ny']), "--nz="+str(next['nz']), "--rt="+str(next['time'])])
         print "Performing work..."
         call(toExecute)
         print "Finished work!"
