@@ -1,6 +1,6 @@
 # Series:
 alert:
-  PubNub: {'pubkey':'asdf', 'subkey':'sfdsdf'}
+  PubNub: {'pubkey':'', 'subkey':''}
 HPCGdir: '../hpcg'
 outDir: '../out'
 verbosity: 1

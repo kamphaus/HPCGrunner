@@ -7,15 +7,18 @@ import re
 
 class Graph(object):
 
-    def __init__(self, config=None):
+    def __init__(self, config, alert):
         self.config = config
+        self.alert = alert
 
     @staticmethod
     def isNumberSerie(values):
         return all([isinstance(v, (int, long, float)) for v in values])
 
     def draw(self, serie):
+        alert = self.alert
         print "Drawing diagram..."
+        alert.info("Drawing diagram...")
         if self.config['verbosity']>1:
             print "for:", serie
 

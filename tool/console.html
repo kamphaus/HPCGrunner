@@ -23,7 +23,7 @@ jQuery(function($, undefined) {
   });
   
   pubnub.subscribe({
-    channel : 'all', 
+    channel : 'pyrunhpcg',
     message : function(m) {
 	  console.log("received "+m);
       if(m != null && typeof m == 'object')

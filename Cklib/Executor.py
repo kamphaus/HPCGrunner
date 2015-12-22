@@ -5,8 +5,9 @@ import timeit
 from subprocess import call
 
 class Executor(object):
-    def __init__ (self, config):
+    def __init__ (self, config, alert):
         self.config = config
+        self.alert = alert
         if 'HPCGdir' not in self.config:
             self.config['HPCGdir'] = '.'
         self.observers = []
@@ -26,7 +27,9 @@ class Executor(object):
         print "Finished work!"
 
     def execute(self, next):
-        print "Executing a run:"
+        alert = self.alert
+        print "Executing a run..."
+        alert.info("Executing a run...")
         if self.config['verbosity']>1:
             print "next:", next
         initial_dir = os.getcwd()
