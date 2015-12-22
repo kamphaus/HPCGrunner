@@ -2,7 +2,7 @@
 import Run
 
 class Serie(dict):
-    attributes = ('name', 'nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions', 'viz')
+    attributes = ('name', 'nx', 'ny', 'nz', 'time', 'NbrOfCores', 'platform', 'configuration', 'repetitions', 'mpiargs', 'viz')
     def __init__(self, data, **kwargs):
         super(Serie, self).__init__(**kwargs)
         self.data = data
