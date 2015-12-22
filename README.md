@@ -15,6 +15,7 @@ You need the following software:
 * Python modules:
   * pyyaml
   * numpy
+  * pubnub
   * python-matplotlib
 
 ## Usage

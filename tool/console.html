@@ -1,0 +1,111 @@
+
+<html>
+  <head>
+    <title>PyRunner console</title>
+  </head>
+  <body style="margin:0px 0px 0px 0px">
+	<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+	<script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+	<script src="jquery.terminal-0.9.2.js"></script>
+	<link href="jquery.terminal-0.9.2.css" rel="stylesheet"/>
+
+	<div id="term"></div>
+
+    <script charset="utf-8">
+
+jQuery(function($, undefined) {
+  var _publish_key   = '';
+  var _subscribe_key = '';
+  var pubnub = PUBNUB.init({
+    publish_key : _publish_key,
+    subscribe_key : _subscribe_key,
+	ssl: true
+  });
+  
+  pubnub.subscribe({
+    channel : 'all', 
+    message : function(m) {
+	  console.log("received "+m);
+      if(m != null && typeof m == 'object')
+		echo(JSON.stringify(m));
+	  else
+		echo(m);
+    },
+    connect: function(error){
+	  console.log("Connected");
+      echo("INF:Connected to PubNub channel: "+JSON.stringify(error));
+    }, disconnect: function(error){
+	  console.log("Disconnected");
+      term.error("Network disconnected: "+JSON.stringify(error));
+    }, reconnect: function(error){
+	  console.log("Reconnected");
+      echo("INF:Network reconnected: "+JSON.stringify(error));
+	}, error: function (error) {
+      console.log("Network Error");
+      term.error("Network error: "+JSON.stringify(error));
+    }
+  });
+  
+  var icons = [
+    ['INF:', 'info16.png'],
+    ['WRN:', 'warn16.png'],
+    ['ERR:', 'err16.png'],
+    ['OK:', 'ok16.png'],
+  ];
+  var sounds = [
+    ['ERR:', 'AirHorn.mp3'],
+    ['OK:', 'TaDa.mp3'],
+  ];
+  function echo(m){
+    print = undefined;
+    for(var key in icons) {
+	  if(m.startsWith(icons[key][0])) {
+	    print = '<img src="'+icons[key][1]+'"> '+htmlEncode(m.substr(icons[key][0].length))
+	    break;
+	  }
+	}
+    for(var key in sounds) {
+	  if(m.startsWith(sounds[key][0])) {
+	    var audio = new Audio(sounds[key][1]);
+		audio.play();
+	    break;
+	  }
+	}
+	if(print===undefined)
+	  print = htmlEncode(m);
+    term.echo(print, {raw:true});
+  }
+  
+	function htmlEncode(value){
+	  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+	  //then grab the encoded contents back out.  The div never exists on the page.
+	  return $('<div/>').text(value).html();
+	}
+
+	function htmlDecode(value){
+	  return $('<div/>').html(value).text();
+	}
+  
+  var term = $('#term').terminal(function(command, term) {
+		if (command === 'help') {
+			term.echo('If the pubnub publish & subscribe keys are configured correctly in the console.html and config.yml files, then you will see updates from the script here.');
+        } else if (command !== '') {
+			console.log("publishing");
+			pubnub.publish({
+			  channel : 'all', 
+			  message : command
+			});
+        } else {
+           term.echo('');
+        }
+    }, {
+        greetings: 'PyRunner console (receive updates here)',
+        name: 'js_demo',
+        height: '95%',
+        prompt: '> '});
+  if(_subscribe_key=='')
+    echo("ERR:Subscribe key not configured: You will not be able to receive updates from the script!");
+});
+    </script>
+  </body>
+</html>
