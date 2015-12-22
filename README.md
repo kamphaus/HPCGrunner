@@ -7,7 +7,7 @@ Finally it will aggregate the results and generate diagrams.
 
 Check out from github: `git clone https://github.com/kamphaus/HPCGrunner.git`
 
-## Prerequisite
+## Prerequisites
 
 You need the following software:
 * HPCG (obviously) http://hpcg-benchmark.org/
