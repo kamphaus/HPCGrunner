@@ -83,7 +83,7 @@ class Scheduler(object):
         self.remaining = Diff.getRemaining(self.series, self.results)
         self.remainingExecutable = Filter.filterRemaining(self.remaining, self.environment)
         if len(lastRemaining) > len(self.remaining):
-            self.finishedSeries = result.parent
+            self.finishedSeries = result['parentRemaining']
         else:
             self.finishedSeries = None
         self.next = self.getNext()
