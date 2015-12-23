@@ -58,6 +58,9 @@ class Executor(object):
         if resultFile is None:
             raise StandardError('The results are not available')
         result = ResultValidator.read(resultFile)
+        if not result['result_valid']:
+            print 'Warning: result is not valid!'
+            alert.warn("Result is not valid!")
         os.chdir(initial_dir)
 
         next['results'].append(result['results'])
