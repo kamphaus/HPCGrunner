@@ -4,7 +4,7 @@ class Alert(object):
     def __init__(self, config):
         self.config = config
         self.pnconfig = config['alert']['PubNub']
-        self.pn = Pubnub(publish_key=self.pnconfig['pubkey'], subscribe_key=self.pnconfig['subkey'])
+        self.pn = Pubnub(publish_key=self.pnconfig['pubkey'], subscribe_key=self.pnconfig['subkey'], ssl_on=True)
 
     def info(self, message):
         self.pn.publish(channel='pyrunhpcg', message="INF:"+message)
