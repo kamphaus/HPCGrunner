@@ -25,11 +25,18 @@ class Workflow(object):
         executor = Executor.Executor(config, alert)
         executor.registerObserver(scheduler)
         graph = Graph.Graph(config, alert)
+        countAllRemaining = Counter.countRemaining(scheduler.getRemaining())
+        countRemaining = Counter.countRemaining(scheduler.getRemainingExecutable())
+        if countAllRemaining > countRemaining:
+            alert.warn("Some runs can only be executed in another environment!")
         while scheduler.hasNextExecutable():
-            print "Remaining total time:", Counter.countRemaining(scheduler.getRemaining())
-            alert.info("Remaining total time: "+str(Counter.countRemaining(scheduler.getRemaining())))
-            print "Remaining time:", Counter.countRemaining(scheduler.getRemainingExecutable())
-            alert.info("Remaining time: "+str(Counter.countRemaining(scheduler.getRemainingExecutable())))
+            countAllRemaining = Counter.countRemaining(scheduler.getRemaining())
+            countRemaining = Counter.countRemaining(scheduler.getRemainingExecutable())
+            message = "Remaining time: "+str(countRemaining)
+            if countAllRemaining > countRemaining:
+                message += " (+" + str(countAllRemaining-countRemaining) + " in another env.)"
+            print message
+            alert.info(message)
             executor.execute(scheduler.getNextExecutable())
             results = list(r.getReduced() for r in scheduler.getResults())
             os.chdir(config['outDir'])
