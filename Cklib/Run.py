@@ -8,7 +8,8 @@ class Run(dict):
             if x in data:
                 self[x] = data[x]
             else:
-                self[x] = serie[x]
+                if x in serie:
+                    self[x] = serie[x]
 #        if 'repetitions' not in self:
 #            self.repetitions = 1
         #if 'results' not in self: self['results'] = []
@@ -17,7 +18,10 @@ class Run(dict):
 
     def getReduced(self):
         return { k:self[k] for k in Run.attributes if k in self and (k not in self.parent or self[k] != self.parent[k]) }
-    
+
+    def getRunAttributes(self):
+        return { k:self[k] for k in Run.attributes if k in self }
+
     # Compare based on the attributes named in Run.attributes
     def __eq__(self, other):
         if isinstance(other, Run):

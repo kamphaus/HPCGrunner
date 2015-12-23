@@ -20,7 +20,7 @@ class Executor(object):
         if 'mpiargs' in next:
             toExecute.extend(next['mpiargs'].split(" "))
         toExecute.extend(["./xhpcg", "--nx="+str(next['nx']), "--ny="+str(next['ny']), "--nz="+str(next['nz']), "--rt="+str(next['time'])])
-        if self.config['verbosity']>1:
+        if self.config['verbosity']>2:
             print "Calling:", toExecute
         print "Performing work..."
         call(toExecute)
@@ -31,6 +31,8 @@ class Executor(object):
         print "Executing a run..."
         alert.info("Executing a run...")
         if self.config['verbosity']>1:
+            print "next:", next.getRunAttributes()
+        if self.config['verbosity']>2:
             print "next:", next
         initial_dir = os.getcwd()
         os.chdir(self.config['HPCGdir'])
