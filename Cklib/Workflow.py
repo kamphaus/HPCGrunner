@@ -5,6 +5,7 @@ import Graph
 import Alert
 import Diff
 from FileUtils import read_yaml_file, save_yaml_file, archiveFile
+import time
 import os
 
 
@@ -28,6 +29,7 @@ class Workflow(object):
         countAllRemaining = Counter.countRemaining(scheduler.getRemaining())
         countRemaining = Counter.countRemaining(scheduler.getRemainingExecutable())
         if countAllRemaining > countRemaining:
+            print "Some runs can only be executed in another environment!"
             alert.warn("Some runs can only be executed in another environment!")
         while scheduler.hasNextExecutable():
             countAllRemaining = Counter.countRemaining(scheduler.getRemaining())
@@ -44,6 +46,14 @@ class Workflow(object):
             os.chdir(initial_dir)
             if scheduler.hasFinishedSeries():
                 graph.draw(scheduler.getFinishedSeries())
+        countAllRemaining = Counter.countRemaining(scheduler.getRemaining())
+        if countAllRemaining > 0:
+            print "The remaining runs can only be executed in another environment!"
+            alert.warn("The remaining runs can only be executed in another environment!")
+            print "Remaining time: "+str(countAllRemaining)
+            alert.info("Remaining time: "+str(countAllRemaining))
+            time.sleep(2) # To give time to play the warning sound in console
+
 
     def viz(self):
         alert = self.alert
