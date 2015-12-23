@@ -107,7 +107,7 @@ class Graph(object):
             if 'legendtitle' in serie['viz']:
                 legendtitle = serie['viz']['legendtitle']
             if 'loc' in serie['viz']:
-                legendtitle = serie['viz']['loc']
+                loc = serie['viz']['loc']
             ax.legend(sets, values_param2, title=legendtitle, loc=loc)
         # plt.show()
 
