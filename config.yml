@@ -23,4 +23,5 @@ series:
       - NbrOfCores: 16
     viz:
       param1: 'NbrOfCores'
+      xlabel: 'Number of cores'
     

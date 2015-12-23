@@ -68,7 +68,10 @@ class Graph(object):
         fig, ax = plt.subplots()
         ax.set_title(serie['name'])
         ax.set_ylabel('HPCG result (GFLOP/s)')
-        ax.set_xlabel(param1)
+        if 'xlabel' in serie['viz']:
+            ax.set_xlabel(serie['viz']['xlabel'])
+        else:
+            ax.set_xlabel(param1)
         if self.isNumberSerie(values_param1):
             # Use an errorbar plot
             sets = []
