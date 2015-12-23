@@ -52,6 +52,7 @@ def getRemaining(series, results):
         if not found:
             toAdd = getRemainingSerie(s, SerieResult.SerieResult(s.data))
             toAdd['inResult'] = False
+            toAdd['result'] = toAdd
             result.append( toAdd )
     return result
 
