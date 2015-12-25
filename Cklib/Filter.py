@@ -3,14 +3,16 @@ import copy
 
 def filterRemaining(remaining, environment):
     returned = copy.copy(remaining)
-    for r in returned:
+    for i in range(len(returned)-1, -1, -1):
+        r = returned[i]
         if any(not(r[e]==environment[e]) for e in environment if e in r):
-            returned.remove(r)
+            del returned[i]
         else:
             r['runs'] = copy.copy(r['runs'])
-            for i in r['runs']:
-                if any(not(i[e]==environment[e]) for e in environment):
-                    r['runs'].remove(i)
+            for j in range(len(r['runs'])-1, -1, -1):
+                u = r['runs'][j]
+                if any(not(u[e]==environment[e]) for e in environment):
+                    del r['runs'][j]
             if len(r['runs'])==0:
-                returned.remove(r)
+                del returned[i]
     return returned
