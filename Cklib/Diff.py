@@ -21,7 +21,7 @@ def getRemainingSerie(left, right):
                     t['inResult'] = True
                     result.append( t )
                 # Remove from oRuns
-                oRuns.remove(t)
+                oRuns.remove(t)  # OK to use remove due to break
                 break
         if not found:
             toAdd = RunResult.RunResult(returned, r.data)
@@ -47,7 +47,7 @@ def getRemaining(series, results):
                 if len(toAdd['runs'])>0:
                     result.append( toAdd )
                 # Remove from oSeries
-                oSeries.remove(t)
+                oSeries.remove(t)  # OK to use remove due to break
                 break
         if not found:
             toAdd = getRemainingSerie(s, SerieResult.SerieResult(s.data))
