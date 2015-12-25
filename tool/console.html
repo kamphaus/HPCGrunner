@@ -20,7 +20,8 @@ jQuery(function($, undefined) {
   var pubnub = PUBNUB.init({
     publish_key : _publish_key,
     subscribe_key : _subscribe_key,
-	ssl: true
+    ssl: true,
+    restore: true
   });
   
   pubnub.subscribe({
