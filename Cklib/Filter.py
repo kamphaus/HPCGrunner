@@ -8,11 +8,15 @@ def filterRemaining(remaining, environment):
         if any(not(r[e]==environment[e]) for e in environment if e in r):
             del returned[i]
         else:
-            r['runs'] = copy.copy(r['runs'])
-            for j in range(len(r['runs'])-1, -1, -1):
-                u = r['runs'][j]
+            runs = copy.copy(r['runs'])
+            for j in range(len(runs)-1, -1, -1):
+                u = runs[j]
                 if any(not(u[e]==environment[e]) for e in environment):
-                    del r['runs'][j]
-            if len(r['runs'])==0:
+                    del runs[j]
+            if len(runs)==0:
                 del returned[i]
+            else:
+                r = copy.deepcopy(r)
+                r['runs'] = runs
+                returned[i] = r
     return returned
