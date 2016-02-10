@@ -61,6 +61,13 @@ jQuery(function($, undefined) {
   ];
   function echo(m){
     print = undefined;
+    var patt = /^\d\d\d\d-\d\d-\d\d \d\d\:\d\d\:\d\d/;
+    var res = patt.exec(m);
+	if(res!==null) {
+	  m = m.substring(19);
+	  if(m.substring(0,1)==" ")
+	    m = m.substring(1);
+	}
     for(var key in icons) {
 	  if(m.startsWith(icons[key][0])) {
 	    print = '<img src="'+icons[key][1]+'"> '+htmlEncode(m.substr(icons[key][0].length))
@@ -76,8 +83,12 @@ jQuery(function($, undefined) {
 	}
 	if(print===undefined)
 	  print = htmlEncode(m);
-    var now = new moment();
-	print = now.format("HH:mm:ss") + " " + print;
+	if(res!==null) {
+	  print = res + " " + print;
+	} else {
+      var now = new moment();
+	  print = "<i>" + now.format("YYYY-MM-DD HH:mm:ss") + "</i> " + print;
+	}
     term.echo(print, {raw:true});
   }
   
